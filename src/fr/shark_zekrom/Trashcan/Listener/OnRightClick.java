@@ -6,9 +6,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -19,10 +22,9 @@ public class OnRightClick implements Listener {
 
 
     @EventHandler
-    public void onClick(PlayerInteractEvent event) {
+    public void onBlockClick(PlayerInteractEvent event) {
 
         Player player = event.getPlayer();
-        ItemStack item = event.getItem();
 
         String key = ".";
         File file = new File(Main.getInstance().getDataFolder(), "trashcan.yml");
@@ -46,11 +48,38 @@ public class OnRightClick implements Listener {
                 String name1 = Config.get().getString("GUIName");
                 String name2 = name1.replaceAll("&", "§");
 
-                Inventory inventory = Bukkit.createInventory(null,size2, name2);
+                Inventory inventory = Bukkit.createInventory(null, size2, name2);
                 player.openInventory(inventory);
 
             }
         }
     }
 
+    @EventHandler
+    public void onBlockClick(PlayerInteractAtEntityEvent event) {
+        Player player = event.getPlayer();
+        if (event.getRightClicked() instanceof ArmorStand) {
+            String key = ".";
+            File file = new File(Main.getInstance().getDataFolder(), "trashcanentity.yml");
+            YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+            ConfigurationSection configsection = config.getConfigurationSection(key);
+
+
+            Double locx = event.getRightClicked().getLocation().getX();
+            Double locy = event.getRightClicked().getLocation().getY();
+            Double locz = event.getRightClicked().getLocation().getZ();
+            String locworld = event.getRightClicked().getLocation().getWorld().getName();
+
+            String loc = config.getString("trashcan." + locworld + "." + locx + "." + locy + "." + locz);
+            if (loc != null) {
+                int size1 = Config.get().getInt("GUISize");
+                int size2 = size1 * 9;
+                String name1 = Config.get().getString("GUIName");
+                String name2 = name1.replaceAll("&", "§");
+
+                Inventory inventory = Bukkit.createInventory(null, size2, name2);
+                player.openInventory(inventory);
+            }
+        }
+    }
 }
