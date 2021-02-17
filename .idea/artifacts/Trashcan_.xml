@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Trashcan+">
+    <output-path>$USER_HOME$/OneDrive</output-path>
+    <root id="archive" name="Trashcan+.jar">
+      <element id="module-output" name="Trashcan+" />
+    </root>
+  </artifact>
+</component>
