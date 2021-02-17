@@ -43,10 +43,10 @@ public class OnRightClick implements Listener {
             if (loc != null) {
                 int size1 = Config.get().getInt("GUISize");
                 int size2 = size1 * 9;
-                String name = Config.get().getString("GUIName");
+                String name1 = Config.get().getString("GUIName");
+                String name2 = name1.replaceAll("&", "§");
 
-
-                Inventory inventory = Bukkit.createInventory(null,size2, name);
+                Inventory inventory = Bukkit.createInventory(null,size2, name2);
                 player.openInventory(inventory);
 
             }

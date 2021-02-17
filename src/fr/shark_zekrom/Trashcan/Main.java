@@ -32,7 +32,7 @@ public class Main extends JavaPlugin {
         Config.setup();
 
         Config.get().addDefault("GUISize", 1);
-        Config.get().addDefault("GUIName", "Trashcan");
+        Config.get().addDefault("GUIName", "&7Trashcan");
         Config.get().options().copyDefaults(true);
         Config.save();
 
