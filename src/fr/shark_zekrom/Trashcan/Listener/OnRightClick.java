@@ -82,7 +82,7 @@ public class OnRightClick implements Listener {
 
                 Inventory inventory = Bukkit.createInventory(null, size2, name2);
                 if (song.equals(true)) {
-                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1.0F, 8.0F);
+                    player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 8.0F);
                 }
 
                 player.openInventory(inventory);
