@@ -26,22 +26,15 @@ public class Main extends JavaPlugin {
         this.getCommand("trashcan").setExecutor(new Commands());
         pm.registerEvents(new OnRightClick(), this);
 
-        //  getConfig().options().copyDefaults();
+        getConfig().options().copyDefaults();
 
 
-        //  Config.setup();
+        Config.setup();
 
-      //  Config.get().addDefault("TicketInInventory", "§cYou already have a ticket in your inventory.");
-        //    Config.get().addDefault("TicketIsNotInHand", "§cYou don't have a ticket in your hand.");
-        // Config.get().addDefault("TeleportationInProgress", "§eTeleportation in progress.");
-        // Config.get().addDefault("FastpassReceived", "§bFastpass received.");
-        // Config.get().addDefault("FastpassClosed", "§cFastpass closed.");
-        // Config.get().addDefault("FastpassReceived", "§6Fastpass received.");
-
-        // Config.get().addDefault("Prefix", "§b[Trashcan+] ");
-
-        // Config.get().options().copyDefaults(true);
-        //  Config.save();
+        Config.get().addDefault("GUISize", 1);
+        Config.get().addDefault("GUIName", "Trashcan");
+        Config.get().options().copyDefaults(true);
+        Config.save();
 
     }
 

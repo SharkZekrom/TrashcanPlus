@@ -13,7 +13,7 @@ public class Config {
     private static FileConfiguration customFile;
 
     public static void setup(){
-        file = new File(Bukkit.getServer().getPluginManager().getPlugin("Trashcan").getDataFolder(), "messages.yml");
+        file = new File(Bukkit.getServer().getPluginManager().getPlugin("Trashcan").getDataFolder(), "config.yml");
 
         if (!file.exists()){
             try{

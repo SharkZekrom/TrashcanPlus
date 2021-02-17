@@ -1,6 +1,8 @@
 package fr.shark_zekrom.Trashcan.Listener;
 
+import fr.shark_zekrom.Trashcan.Config;
 import fr.shark_zekrom.Trashcan.Main;
+import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -8,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
@@ -38,7 +41,13 @@ public class OnRightClick implements Listener {
             String loc = config.getString("trashcan." + locworld + "." + locx + "." + locy + "." + locz);
 
             if (loc != null) {
+                int size1 = Config.get().getInt("GUISize");
+                int size2 = size1 * 9;
+                String name = Config.get().getString("GUIName");
 
+
+                Inventory inventory = Bukkit.createInventory(null,size2, name);
+                player.openInventory(inventory);
 
             }
         }
