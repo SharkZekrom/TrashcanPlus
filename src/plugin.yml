@@ -3,7 +3,7 @@ main: fr.shark_zekrom.Trashcan.Main
 version: 1.0
 api-version: 1.13
 author: shark_zekrom
-description: Trashcan
+description: Trashcan+
 commands:
   trashcan:
     description: créer des fastpass facilement

@@ -26,50 +26,24 @@ public class Main extends JavaPlugin {
         this.getCommand("trashcan").setExecutor(new Commands());
         pm.registerEvents(new OnRightClick(), this);
 
-        getConfig().options().copyDefaults();
+        //  getConfig().options().copyDefaults();
 
 
-//        Config.setup();
+        //  Config.setup();
 
-        //    Config.get().addDefault("TicketInInventory", "§cYou already have a ticket in your inventory.");
-        //   Config.get().addDefault("TicketIsNotInHand", "§cYou don't have a ticket in your hand.");
-        //  Config.get().addDefault("TeleportationInProgress", "§eTeleportation in progress.");
+      //  Config.get().addDefault("TicketInInventory", "§cYou already have a ticket in your inventory.");
+        //    Config.get().addDefault("TicketIsNotInHand", "§cYou don't have a ticket in your hand.");
+        // Config.get().addDefault("TeleportationInProgress", "§eTeleportation in progress.");
         // Config.get().addDefault("FastpassReceived", "§bFastpass received.");
         // Config.get().addDefault("FastpassClosed", "§cFastpass closed.");
         // Config.get().addDefault("FastpassReceived", "§6Fastpass received.");
 
-        //  Config.get().addDefault("Prefix", "§b[FastPass+] ");
+        // Config.get().addDefault("Prefix", "§b[Trashcan+] ");
 
         // Config.get().options().copyDefaults(true);
-        // Config.save();
+        //  Config.save();
 
-
-
-        // String version = Bukkit.getBukkitVersion().split("-")[0];
-        // switch (version) {
-        //      case "1.13":
-        //     case "1.14":
-        //     case "1.15":
-        //        wrapper = (Wrapper) new OnRightClick1_13();
-        //     getLogger().severe("1_13");
-        //       break;
-        //   case "1.16":
-        //      wrapper = (Wrapper) new OnRightClick();
-        //      getLogger().severe("1_16");
-        // default:
-        //     wrapper = (Wrapper) new OnRightClick();
-        //    getLogger().severe("1_16");
-        //   break;
-
-        //  }
     }
-
-
-
-
-
-
-
 
 
     @Override

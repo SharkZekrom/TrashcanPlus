@@ -1,13 +1,20 @@
 package fr.shark_zekrom.Trashcan.Commands;
 
+import fr.shark_zekrom.Trashcan.Main;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,9 +36,69 @@ public class Commands implements CommandExecutor , TabExecutor {
                     player.sendMessage(ChatColor.AQUA + "/trashcan reload §8» §eReload the config");
                 }
                 if (args[0].equalsIgnoreCase("create")) {
-                    Block block = player.getTargetBlock(null, 4);
+                    String key = ".";
+                    File file = new File(Main.getInstance().getDataFolder(), "trashcan.yml");
+                    YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+                    ConfigurationSection configsection = config.getConfigurationSection(key);
 
-                    player.sendMessage(String.valueOf(block.getLocation()));
+
+                    Block block = player.getTargetBlock(null, 100);
+
+                    long locx = (long) block.getLocation().getX();
+                    long locy = (long) block.getLocation().getY();
+                    long locz = (long) block.getLocation().getZ();
+                    String locworld = block.getLocation().getWorld().getName();
+
+                    String loc = config.getString("trashcan." + locworld + "." + locx + "." + locy + "." + locz);
+
+                    if (loc != null) {
+                        player.sendMessage("il y a déja un trashcan a cette coordoné");
+                    }
+                    else {
+
+                        config.set("trashcan." + locworld + "." + locx + "." + locy + "." + locz, true);
+                        try {
+                            config.save(file);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        player.sendMessage("create");
+                    }
+
+
+
+                }
+                if (args[0].equalsIgnoreCase("delete")) {
+
+                    String key = ".";
+                    File file = new File(Main.getInstance().getDataFolder(), "trashcan.yml");
+                    YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+                    ConfigurationSection configsection = config.getConfigurationSection(key);
+
+                    Block block = player.getTargetBlock(null, 100);
+
+                    long locx = (long) block.getLocation().getX();
+                    long locy = (long) block.getLocation().getY();
+                    long locz = (long) block.getLocation().getZ();
+                    String locworld = block.getLocation().getWorld().getName();
+
+                    String loc = config.getString("trashcan." + locworld + "." + locx + "." + locy + "." + locz);
+
+                    if (loc != null) {
+                        config.set("trashcan." + locworld + "." + locx + "." + locy + "." + locz, null);
+                        try {
+                            config.save(file);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        player.sendMessage("trashcan delete");
+                    }
+                    else {
+
+                        player.sendMessage("aucun trashcan ici");
+                    }
                 }
             }
         }
@@ -43,6 +110,7 @@ public class Commands implements CommandExecutor , TabExecutor {
         if (args.length == 1) {
             List<String> arguments = new ArrayList<>();
             arguments.add("create");
+            arguments.add("delete");
             arguments.add("help");
             return arguments;
         }
