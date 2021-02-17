@@ -1,5 +1,6 @@
 package fr.shark_zekrom.Trashcan.Commands;
 
+import fr.shark_zekrom.Trashcan.Config;
 import fr.shark_zekrom.Trashcan.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -33,6 +34,7 @@ public class Commands implements CommandExecutor , TabExecutor {
                     player.sendMessage(ChatColor.AQUA + "");
                     player.sendMessage(ChatColor.AQUA + "/trashcan help §8» §eSee all commands");
                     player.sendMessage(ChatColor.AQUA + "/trashcan create §8» §eCreate a trashcan");
+                    player.sendMessage(ChatColor.AQUA + "/trashcan create §8» §eDelete a trashcan");
                     player.sendMessage(ChatColor.AQUA + "/trashcan reload §8» §eReload the config");
                 }
                 if (args[0].equalsIgnoreCase("create")) {
@@ -52,18 +54,19 @@ public class Commands implements CommandExecutor , TabExecutor {
                     String loc = config.getString("trashcan." + locworld + "." + locx + "." + locy + "." + locz);
 
                     if (loc != null) {
-                        player.sendMessage("il y a déja un trashcan a cette coordoné");
+                        player.sendMessage(ChatColor.AQUA + "[Trashcan+]" + ChatColor.YELLOW +" There is already a trashcan at this coordinate.");
+
                     }
                     else {
 
                         config.set("trashcan." + locworld + "." + locx + "." + locy + "." + locz, true);
+                        player.sendMessage(ChatColor.AQUA + "[Trashcan+]" + ChatColor.YELLOW +" Trash can with coordinate " + locx + ", " + locy + ", " + locz + " set up.");
+
                         try {
                             config.save(file);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-
-                        player.sendMessage("create");
                     }
 
 
@@ -87,18 +90,23 @@ public class Commands implements CommandExecutor , TabExecutor {
 
                     if (loc != null) {
                         config.set("trashcan." + locworld + "." + locx + "." + locy + "." + locz, null);
+                        player.sendMessage(ChatColor.AQUA + "[Trashcan+]" + ChatColor.YELLOW +" Trash can with coordinate " + locx + ", " + locy + ", " + locz + " deleted.");
+
                         try {
                             config.save(file);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
 
-                        player.sendMessage("trashcan delete");
                     }
                     else {
 
-                        player.sendMessage("aucun trashcan ici");
+                        player.sendMessage(ChatColor.AQUA + "[Trashcan+]" + ChatColor.YELLOW +" No trash can at this coordinate.");
                     }
+                }
+                if (args[0].equalsIgnoreCase("reload")) {
+                    Config.reload();
+                    player.sendMessage(ChatColor.AQUA + "[Trashcan+]" + ChatColor.YELLOW +" Plugin reloaded.");
                 }
             }
         }
@@ -111,7 +119,9 @@ public class Commands implements CommandExecutor , TabExecutor {
             List<String> arguments = new ArrayList<>();
             arguments.add("create");
             arguments.add("delete");
+            arguments.add("reload");
             arguments.add("help");
+
             return arguments;
         }
         return null;
