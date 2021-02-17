@@ -3,6 +3,7 @@ package fr.shark_zekrom.Trashcan.Listener;
 import fr.shark_zekrom.Trashcan.Config;
 import fr.shark_zekrom.Trashcan.Main;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -77,7 +78,13 @@ public class OnRightClick implements Listener {
                 String name1 = Config.get().getString("GUIName");
                 String name2 = name1.replaceAll("&", "§");
 
+                Boolean song = Config.get().getBoolean("GUISong");
+
                 Inventory inventory = Bukkit.createInventory(null, size2, name2);
+                if (song.equals(true)) {
+                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1.0F, 8.0F);
+                }
+
                 player.openInventory(inventory);
             }
         }

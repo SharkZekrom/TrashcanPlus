@@ -33,6 +33,7 @@ public class Main extends JavaPlugin {
 
         Config.get().addDefault("GUISize", 1);
         Config.get().addDefault("GUIName", "&7Trashcan");
+        Config.get().addDefault("GUISong", true);
         Config.get().options().copyDefaults(true);
         Config.save();
 
