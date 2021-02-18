@@ -4,6 +4,7 @@ import fr.shark_zekrom.Trashcan.Config;
 import fr.shark_zekrom.Trashcan.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
@@ -178,18 +179,27 @@ public class Commands implements CommandExecutor , TabExecutor {
                             int size2 = size1 * 9;
                             String name1 = Config.get().getString("GUIName");
                             String name2 = name1.replaceAll("&", "§");
+                            Boolean song = Config.get().getBoolean("GUISong");
+
 
                             Inventory inventory = Bukkit.createInventory(null, size2, name2);
                             player1.openInventory(inventory);
+                            if (song.equals(true)) {
+                                player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 8.0F);
+                            }
                         }
-                        else {
-                            int size1 = Config.get().getInt("GUISize");
-                            int size2 = size1 * 9;
-                            String name1 = Config.get().getString("GUIName");
-                            String name2 = name1.replaceAll("&", "§");
+                    }
+                    else {
+                        int size1 = Config.get().getInt("GUISize");
+                        int size2 = size1 * 9;
+                        String name1 = Config.get().getString("GUIName");
+                        String name2 = name1.replaceAll("&", "§");
+                        Boolean song = Config.get().getBoolean("GUISong");
 
-                            Inventory inventory = Bukkit.createInventory(null, size2, name2);
-                            player.openInventory(inventory);
+                        Inventory inventory = Bukkit.createInventory(null, size2, name2);
+                        player.openInventory(inventory);
+                        if (song.equals(true)) {
+                            player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 8.0F);
                         }
                     }
                 }
