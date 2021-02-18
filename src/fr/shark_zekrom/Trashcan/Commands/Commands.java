@@ -15,6 +15,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,7 +37,8 @@ public class Commands implements CommandExecutor , TabExecutor {
                     player.sendMessage(ChatColor.AQUA + "");
                     player.sendMessage(ChatColor.AQUA + "/trashcan help §8» §eSee all commands");
                     player.sendMessage(ChatColor.AQUA + "/trashcan create §8» §eCreate a trashcan");
-                    player.sendMessage(ChatColor.AQUA + "/trashcan create §8» §eDelete a trashcan");
+                    player.sendMessage(ChatColor.AQUA + "/trashcan delete §8» §eDelete a trashcan");
+                    player.sendMessage(ChatColor.AQUA + "/trashcan open [player] §8» §eOpen a trashcan for you or for a player");
                     player.sendMessage(ChatColor.AQUA + "/trashcan reload §8» §eReload the config");
                 }
                 if (args[0].equalsIgnoreCase("create")) {
@@ -164,6 +166,30 @@ public class Commands implements CommandExecutor , TabExecutor {
                                     player.sendMessage(ChatColor.AQUA + "[Trashcan+]" + ChatColor.YELLOW + " No trash can entity at this coordinate.");
                                 }
                             }
+                        }
+                    }
+                }
+                if (args[0].equalsIgnoreCase("open")) {
+                    if (args[1] != null) {
+                        Player player1 = Bukkit.getPlayer(args[1]);
+
+                        if (player1.isOnline()) {
+                            int size1 = Config.get().getInt("GUISize");
+                            int size2 = size1 * 9;
+                            String name1 = Config.get().getString("GUIName");
+                            String name2 = name1.replaceAll("&", "§");
+
+                            Inventory inventory = Bukkit.createInventory(null, size2, name2);
+                            player1.openInventory(inventory);
+                        }
+                        else {
+                            int size1 = Config.get().getInt("GUISize");
+                            int size2 = size1 * 9;
+                            String name1 = Config.get().getString("GUIName");
+                            String name2 = name1.replaceAll("&", "§");
+
+                            Inventory inventory = Bukkit.createInventory(null, size2, name2);
+                            player.openInventory(inventory);
                         }
                     }
                 }
