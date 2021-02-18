@@ -188,6 +188,7 @@ public class Commands implements CommandExecutor , TabExecutor {
                                 player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 8.0F);
                             }
                         }
+
                     }
                     else {
                         int size1 = Config.get().getInt("GUISize");
