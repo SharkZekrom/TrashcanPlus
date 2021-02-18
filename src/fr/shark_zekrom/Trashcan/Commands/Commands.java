@@ -170,7 +170,7 @@ public class Commands implements CommandExecutor , TabExecutor {
                     }
                 }
                 if (args[0].equalsIgnoreCase("open")) {
-                    if (args[1] != null) {
+                    if (args.length == 2) {
                         Player player1 = Bukkit.getPlayer(args[1]);
 
                         if (player1.isOnline()) {
@@ -208,8 +208,16 @@ public class Commands implements CommandExecutor , TabExecutor {
             List<String> arguments = new ArrayList<>();
             arguments.add("create");
             arguments.add("delete");
+            arguments.add("open");
             arguments.add("reload");
             arguments.add("help");
+
+            return arguments;
+        }
+        if (args[1].equals("create") || args[1].equals("delete")) {
+            List<String> arguments = new ArrayList<>();
+            arguments.add("block");
+            arguments.add("entity");
 
             return arguments;
         }
