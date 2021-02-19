@@ -37,137 +37,152 @@ public class Commands implements CommandExecutor , TabExecutor {
                     player.sendMessage(ChatColor.AQUA + "Commands:");
                     player.sendMessage(ChatColor.AQUA + "");
                     player.sendMessage(ChatColor.AQUA + "/trashcan help §8» §eSee all commands");
-                    player.sendMessage(ChatColor.AQUA + "/trashcan create §8» §eCreate a trashcan");
-                    player.sendMessage(ChatColor.AQUA + "/trashcan delete §8» §eDelete a trashcan");
+                    player.sendMessage(ChatColor.AQUA + "/trashcan create <block/entity> §8» §eCreate a trashcan");
+                    player.sendMessage(ChatColor.AQUA + "/trashcan delete <block/entity> §8» §eDelete a trashcan");
                     player.sendMessage(ChatColor.AQUA + "/trashcan open [player] §8» §eOpen a trashcan for you or for a player");
                     player.sendMessage(ChatColor.AQUA + "/trashcan reload §8» §eReload the config");
                 }
                 if (args[0].equalsIgnoreCase("create")) {
-                    if (args[1].equalsIgnoreCase("block")) {
-                        String key = ".";
-                        File file = new File(Main.getInstance().getDataFolder(), "trashcan.yml");
-                        YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
-                        ConfigurationSection configsection = config.getConfigurationSection(key);
+                    if (args.length > 1) {
+                        if (args[1].equalsIgnoreCase("block")) {
+                            String key = ".";
+                            File file = new File(Main.getInstance().getDataFolder(), "trashcan.yml");
+                            YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+                            ConfigurationSection configsection = config.getConfigurationSection(key);
 
 
-                        Block block = player.getTargetBlock(null, 100);
+                            Block block = player.getTargetBlock(null, 100);
 
-                        long locx = (long) block.getLocation().getX();
-                        long locy = (long) block.getLocation().getY();
-                        long locz = (long) block.getLocation().getZ();
-                        String locworld = block.getLocation().getWorld().getName();
+                            long locx = (long) block.getLocation().getX();
+                            long locy = (long) block.getLocation().getY();
+                            long locz = (long) block.getLocation().getZ();
+                            String locworld = block.getLocation().getWorld().getName();
 
-                        String loc = config.getString("trashcan." + locworld + "." + locx + "." + locy + "." + locz);
+                            String loc = config.getString("trashcan." + locworld + "." + locx + "." + locy + "." + locz);
 
-                        if (loc != null) {
-                            player.sendMessage(ChatColor.AQUA + "[Trashcan+]" + ChatColor.YELLOW + " There is already a trashcan at this coordinate.");
+                            if (loc != null) {
+                                player.sendMessage(ChatColor.AQUA + "[Trashcan+]" + ChatColor.YELLOW + " There is already a trashcan at this coordinate.");
 
-                        } else {
+                            } else {
 
-                            config.set("trashcan." + locworld + "." + locx + "." + locy + "." + locz, true);
-                            player.sendMessage(ChatColor.AQUA + "[Trashcan+]" + ChatColor.YELLOW + " Trash can with coordinate " + locx + ", " + locy + ", " + locz + " set up.");
+                                config.set("trashcan." + locworld + "." + locx + "." + locy + "." + locz, true);
+                                player.sendMessage(ChatColor.AQUA + "[Trashcan+]" + ChatColor.YELLOW + " Trash can with coordinate " + locx + ", " + locy + ", " + locz + " set up.");
 
-                            try {
-                                config.save(file);
-                            } catch (IOException e) {
-                                e.printStackTrace();
+                                try {
+                                    config.save(file);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
-                    }
-                    if (args[1].equalsIgnoreCase("entity")) {
+                        if (args[1].equalsIgnoreCase("entity")) {
 
-                        String key = ".";
-                        File file = new File(Main.getInstance().getDataFolder(), "trashcanentity.yml");
-                        YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
-                        ConfigurationSection configsection = config.getConfigurationSection(key);
+                            String key = ".";
+                            File file = new File(Main.getInstance().getDataFolder(), "trashcanentity.yml");
+                            YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+                            ConfigurationSection configsection = config.getConfigurationSection(key);
 
-                        for (Entity entity : player.getNearbyEntities(0.5D, 0.5D, 0.5D)) {
-                            if (entity instanceof ArmorStand) {
-                                Double locx = entity.getLocation().getX();
-                                Double locy = entity.getLocation().getY();
-                                Double locz = entity.getLocation().getZ();
-                                String locworld = entity.getLocation().getWorld().getName();
+                            for (Entity entity : player.getNearbyEntities(0.5D, 0.5D, 0.5D)) {
+                                if (entity instanceof ArmorStand) {
+                                    Double locx = entity.getLocation().getX();
+                                    Double locy = entity.getLocation().getY();
+                                    Double locz = entity.getLocation().getZ();
+                                    String locworld = entity.getLocation().getWorld().getName();
 
-                                String loc = config.getString("trashcan." + locworld + "." + locx + "." + locy + "." + locz);
+                                    String loc = config.getString("trashcan." + locworld + "." + locx + "." + locy + "." + locz);
 
-                                if (loc != null) {
-                                    player.sendMessage(ChatColor.AQUA + "[Trashcan+]" + ChatColor.YELLOW + " There is already a trashcan at this coordinate.");
+                                    if (loc != null) {
+                                        player.sendMessage(ChatColor.AQUA + "[Trashcan+]" + ChatColor.YELLOW + " There is already a trashcan at this coordinate.");
 
-                                } else {
+                                    } else {
 
-                                    config.set("trashcan." + locworld + "." + locx + "." + locy + "." + locz, true);
-                                    player.sendMessage(ChatColor.AQUA + "[Trashcan+]" + ChatColor.YELLOW + " Trash can entity with coordinate " + locx + ", " + locy + ", " + locz + " set up.");
+                                        config.set("trashcan." + locworld + "." + locx + "." + locy + "." + locz, true);
+                                        player.sendMessage(ChatColor.AQUA + "[Trashcan+]" + ChatColor.YELLOW + " Trash can entity with coordinate " + locx + ", " + locy + ", " + locz + " set up.");
 
-                                    try {
-                                        config.save(file);
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
+                                        try {
+                                            config.save(file);
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
                                     }
                                 }
                             }
                         }
+                    } else {
+                        player.sendMessage(ChatColor.AQUA + "==========[Trashcan+]==========");
+                        player.sendMessage(ChatColor.AQUA + "");
+                        player.sendMessage(ChatColor.AQUA + "/trashcan create <block/entity> §8» §eCreate a trashcan");
                     }
                 }
+
                 if (args[0].equalsIgnoreCase("delete")) {
-                    if (args[1].equalsIgnoreCase("block")) {
-                        String key = ".";
-                        File file = new File(Main.getInstance().getDataFolder(), "trashcan.yml");
-                        YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
-                        ConfigurationSection configsection = config.getConfigurationSection(key);
+                    if (args.length > 1) {
 
-                        Block block = player.getTargetBlock(null, 100);
+                        if (args[1].equalsIgnoreCase("block")) {
+                            String key = ".";
+                            File file = new File(Main.getInstance().getDataFolder(), "trashcan.yml");
+                            YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+                            ConfigurationSection configsection = config.getConfigurationSection(key);
 
-                        long locx = (long) block.getLocation().getX();
-                        long locy = (long) block.getLocation().getY();
-                        long locz = (long) block.getLocation().getZ();
-                        String locworld = block.getLocation().getWorld().getName();
+                            Block block = player.getTargetBlock(null, 100);
 
-                        String loc = config.getString("trashcan." + locworld + "." + locx + "." + locy + "." + locz);
+                            long locx = (long) block.getLocation().getX();
+                            long locy = (long) block.getLocation().getY();
+                            long locz = (long) block.getLocation().getZ();
+                            String locworld = block.getLocation().getWorld().getName();
 
-                        if (loc != null) {
-                            config.set("trashcan." + locworld + "." + locx + "." + locy + "." + locz, null);
-                            player.sendMessage(ChatColor.AQUA + "[Trashcan+]" + ChatColor.YELLOW + " Trash can with coordinate " + locx + ", " + locy + ", " + locz + " deleted.");
+                            String loc = config.getString("trashcan." + locworld + "." + locx + "." + locy + "." + locz);
 
-                            try {
-                                config.save(file);
-                            } catch (IOException e) {
-                                e.printStackTrace();
+                            if (loc != null) {
+                                config.set("trashcan." + locworld + "." + locx + "." + locy + "." + locz, null);
+                                player.sendMessage(ChatColor.AQUA + "[Trashcan+]" + ChatColor.YELLOW + " Trash can with coordinate " + locx + ", " + locy + ", " + locz + " deleted.");
+
+                                try {
+                                    config.save(file);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
+                            } else {
+
+                                player.sendMessage(ChatColor.AQUA + "[Trashcan+]" + ChatColor.YELLOW + " No trash can at this coordinate.");
                             }
-
-                        } else {
-
-                            player.sendMessage(ChatColor.AQUA + "[Trashcan+]" + ChatColor.YELLOW + " No trash can at this coordinate.");
                         }
-                    }
-                    if (args[1].equalsIgnoreCase("entity")) {
-                        String key = ".";
-                        File file = new File(Main.getInstance().getDataFolder(), "trashcanentity.yml");
-                        YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
-                        ConfigurationSection configsection = config.getConfigurationSection(key);
+                        if (args[1].equalsIgnoreCase("entity")) {
+                            String key = ".";
+                            File file = new File(Main.getInstance().getDataFolder(), "trashcanentity.yml");
+                            YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+                            ConfigurationSection configsection = config.getConfigurationSection(key);
 
-                        for (Entity entity : player.getNearbyEntities(0.5D, 0.5D, 0.5D)) {
-                            if (entity instanceof ArmorStand) {
-                                Double locx = entity.getLocation().getX();
-                                Double locy = entity.getLocation().getY();
-                                Double locz = entity.getLocation().getZ();
-                                String locworld = entity.getLocation().getWorld().getName();
+                            for (Entity entity : player.getNearbyEntities(0.5D, 0.5D, 0.5D)) {
+                                if (entity instanceof ArmorStand) {
+                                    Double locx = entity.getLocation().getX();
+                                    Double locy = entity.getLocation().getY();
+                                    Double locz = entity.getLocation().getZ();
+                                    String locworld = entity.getLocation().getWorld().getName();
 
-                                String loc = config.getString("trashcan." + locworld + "." + locx + "." + locy + "." + locz);
+                                    String loc = config.getString("trashcan." + locworld + "." + locx + "." + locy + "." + locz);
 
-                                if (loc != null) {
-                                    config.set("trashcan." + locworld + "." + locx + "." + locy + "." + locz, null);
-                                    player.sendMessage(ChatColor.AQUA + "[Trashcan+]" + ChatColor.YELLOW + " Trash can entity with coordinate " + locx + ", " + locy + ", " + locz + " deleted.");
+                                    if (loc != null) {
+                                        config.set("trashcan." + locworld + "." + locx + "." + locy + "." + locz, null);
+                                        player.sendMessage(ChatColor.AQUA + "[Trashcan+]" + ChatColor.YELLOW + " Trash can entity with coordinate " + locx + ", " + locy + ", " + locz + " deleted.");
 
-                                    try {
-                                        config.save(file);
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
+                                        try {
+                                            config.save(file);
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    } else {
+                                        player.sendMessage(ChatColor.AQUA + "[Trashcan+]" + ChatColor.YELLOW + " No trash can entity at this coordinate.");
                                     }
-                                } else {
-                                    player.sendMessage(ChatColor.AQUA + "[Trashcan+]" + ChatColor.YELLOW + " No trash can entity at this coordinate.");
                                 }
                             }
                         }
+                    }
+                    else {
+                        player.sendMessage(ChatColor.AQUA + "==========[Trashcan+]==========");
+                        player.sendMessage(ChatColor.AQUA + "");
+                        player.sendMessage(ChatColor.AQUA + "/trashcan delete <block/entity> §8» §eCreate a trashcan");
                     }
                 }
                 if (args[0].equalsIgnoreCase("open")) {
