@@ -44,7 +44,7 @@ public class Commands implements CommandExecutor , TabExecutor {
                         player.sendMessage(ChatColor.AQUA + "/trashcan reload §8» §eReload the config");
                     }
                     if (args[0].equalsIgnoreCase("create")) {
-                        if (args.length > 2) {
+                        if (args.length > 1) {
                             if (args[1].equalsIgnoreCase("block")) {
                                 String key = ".";
                                 File file = new File(Main.getInstance().getDataFolder(), "trashcan.yml");
