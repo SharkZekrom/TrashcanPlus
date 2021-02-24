@@ -3,6 +3,8 @@ package fr.shark_zekrom.Trashcan.Listener;
 import fr.shark_zekrom.Trashcan.Config;
 import fr.shark_zekrom.Trashcan.Main;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
@@ -12,12 +14,16 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.File;
+import java.io.IOException;
 
 public class OnRightClick implements Listener {
 
@@ -88,5 +94,36 @@ public class OnRightClick implements Listener {
                 player.openInventory(inventory);
             }
         }
+    }
+
+
+
+
+
+    @EventHandler
+    private void onInventoryClick(InventoryClickEvent event) throws IOException {
+        Inventory inventory = event.getInventory();
+        Player player = (Player) event.getWhoClicked();
+        int slot = event.getSlot();
+        if (slot == 35) {
+            event.setCancelled(true);
+            player.setItemOnCursor(new ItemStack(Material.AIR));
+
+        }
+    }
+
+
+
+    @EventHandler
+    public void onJoin(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
+
+        ItemStack hopper = new ItemStack(Material.HOPPER, 1);
+        ItemMeta hp = hopper.getItemMeta();
+        hp.setDisplayName("§6Hopper");
+        hopper.setItemMeta(hp);
+
+        player.getInventory().setItem(35, hopper);
+
     }
 }
