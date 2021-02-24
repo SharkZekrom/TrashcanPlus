@@ -14,6 +14,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -130,6 +131,18 @@ public class Event implements Listener {
             hopper.setItemMeta(hp);
 
             player.getInventory().setItem(TrashInInventorySlot, hopper);
+        }
+
+    }
+
+    @EventHandler
+    public void onQuit(PlayerQuitEvent event) {
+        Player player = event.getPlayer();
+
+        boolean TrashInInventory = Config.get().getBoolean("TrashInInventory");
+        if (TrashInInventory) {
+            int TrashInInventorySlot = Config.get().getInt("TrashInInventorySlot");
+            player.getInventory().setItem(TrashInInventorySlot, new ItemStack(Material.AIR));
         }
 
     }
