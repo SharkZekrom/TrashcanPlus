@@ -34,6 +34,8 @@ public class Main extends JavaPlugin {
         Config.get().addDefault("GUISize", 1);
         Config.get().addDefault("GUIName", "&7Trashcan");
         Config.get().addDefault("GUISong", true);
+        Config.get().addDefault("TrashInInventory", true);
+        Config.get().addDefault("TrashInInventorySlot", 35);
         Config.get().options().copyDefaults(true);
         Config.save();
 

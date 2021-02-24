@@ -118,12 +118,16 @@ public class OnRightClick implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        ItemStack hopper = new ItemStack(Material.HOPPER, 1);
-        ItemMeta hp = hopper.getItemMeta();
-        hp.setDisplayName("§6Hopper");
-        hopper.setItemMeta(hp);
+        Boolean TrashInInventory = Config.get().getBoolean("TrashInInventory");
+        if (TrashInInventory) {
+            int TrashInInventorySlot = Config.get().getInt("TrashInInventorySlot");
+            ItemStack hopper = new ItemStack(Material.HOPPER, 1);
+            ItemMeta hp = hopper.getItemMeta();
+            hp.setDisplayName("§6Hopper");
+            hopper.setItemMeta(hp);
 
-        player.getInventory().setItem(35, hopper);
+            player.getInventory().setItem(TrashInInventorySlot, hopper);
+        }
 
     }
 }
