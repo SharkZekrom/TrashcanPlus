@@ -1,4 +1,4 @@
-package fr.shark_zekrom.Trashcan.Commands;
+package fr.shark_zekrom.Trashcan;
 
 import fr.shark_zekrom.Trashcan.Config;
 import fr.shark_zekrom.Trashcan.Main;
@@ -30,7 +30,7 @@ public class Commands implements CommandExecutor , TabExecutor {
         Player player = (Player) sender;
 
         if (cmd.getName().equalsIgnoreCase("trashcan")) {
-            if (args.length > 1) {
+            if (args.length > 0) {
                 if (sender.hasPermission("trashcan.admin")) {
                     if (args[0].equalsIgnoreCase("help")) {
                         player.sendMessage(ChatColor.AQUA + "==========[Trashcan+]==========");

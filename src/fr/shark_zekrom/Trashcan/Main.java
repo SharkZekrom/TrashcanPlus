@@ -1,7 +1,5 @@
 package fr.shark_zekrom.Trashcan;
 
-import fr.shark_zekrom.Trashcan.Commands.Commands;
-import fr.shark_zekrom.Trashcan.Listener.OnRightClick;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -24,7 +22,7 @@ public class Main extends JavaPlugin {
         PluginManager pm = getServer().getPluginManager();
 
         this.getCommand("trashcan").setExecutor(new Commands());
-        pm.registerEvents(new OnRightClick(), this);
+        pm.registerEvents(new Event(), this);
 
         getConfig().options().copyDefaults();
 
@@ -34,8 +32,9 @@ public class Main extends JavaPlugin {
         Config.get().addDefault("GUISize", 1);
         Config.get().addDefault("GUIName", "&7Trashcan");
         Config.get().addDefault("GUISong", true);
-        Config.get().addDefault("TrashInInventory", true);
+        Config.get().addDefault("TrashInInventory", false);
         Config.get().addDefault("TrashInInventorySlot", 35);
+        Config.get().addDefault("TrashInInventoryName", "&8test");
         Config.get().options().copyDefaults(true);
         Config.save();
 

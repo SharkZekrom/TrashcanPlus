@@ -1,16 +1,12 @@
-package fr.shark_zekrom.Trashcan.Listener;
+package fr.shark_zekrom.Trashcan;
 
-import fr.shark_zekrom.Trashcan.Config;
-import fr.shark_zekrom.Trashcan.Main;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -25,7 +21,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.io.File;
 import java.io.IOException;
 
-public class OnRightClick implements Listener {
+public class Event implements Listener {
 
 
     @EventHandler
@@ -105,10 +101,14 @@ public class OnRightClick implements Listener {
         Inventory inventory = event.getInventory();
         Player player = (Player) event.getWhoClicked();
         int slot = event.getSlot();
-        if (slot == 35) {
-            event.setCancelled(true);
-            player.setItemOnCursor(new ItemStack(Material.AIR));
+        boolean TrashInInventory = Config.get().getBoolean("TrashInInventory");
+        if (TrashInInventory) {
+            int TrashInInventorySlot = Config.get().getInt("TrashInInventorySlot");
 
+            if (slot == TrashInInventorySlot) {
+                event.setCancelled(true);
+                player.setItemOnCursor(new ItemStack(Material.AIR));
+            }
         }
     }
 
@@ -118,12 +118,15 @@ public class OnRightClick implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        Boolean TrashInInventory = Config.get().getBoolean("TrashInInventory");
+        boolean TrashInInventory = Config.get().getBoolean("TrashInInventory");
         if (TrashInInventory) {
             int TrashInInventorySlot = Config.get().getInt("TrashInInventorySlot");
+            String TrashInInventoryName = Config.get().getString("TrashInInventoryName");
+            String TrashInInventoryName2 =  TrashInInventoryName.replaceAll("&", "§");
+
             ItemStack hopper = new ItemStack(Material.HOPPER, 1);
             ItemMeta hp = hopper.getItemMeta();
-            hp.setDisplayName("§6Hopper");
+            hp.setDisplayName(TrashInInventoryName2);
             hopper.setItemMeta(hp);
 
             player.getInventory().setItem(TrashInInventorySlot, hopper);
