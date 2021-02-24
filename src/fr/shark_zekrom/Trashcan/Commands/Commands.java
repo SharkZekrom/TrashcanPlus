@@ -117,8 +117,7 @@ public class Commands implements CommandExecutor , TabExecutor {
                     }
 
                     if (args[0].equalsIgnoreCase("delete")) {
-                        if (args.length > 2) {
-
+                        if (args.length > 1) {
                             if (args[1].equalsIgnoreCase("block")) {
                                 String key = ".";
                                 File file = new File(Main.getInstance().getDataFolder(), "trashcan.yml");
