@@ -1,11 +1,8 @@
-package fr.shark_zekrom.Trashcan;
+package fr.shark_zekrom.trashcan;
 
-import fr.shark_zekrom.Trashcan.Config;
-import fr.shark_zekrom.Trashcan.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
-import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.command.*;
 import org.bukkit.configuration.ConfigurationSection;

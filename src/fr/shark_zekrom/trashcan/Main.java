@@ -1,4 +1,4 @@
-package fr.shark_zekrom.Trashcan;
+package fr.shark_zekrom.trashcan;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
