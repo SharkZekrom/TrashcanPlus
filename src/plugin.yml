@@ -6,4 +6,4 @@ author: shark_zekrom
 description: Trashcan+
 commands:
   trashcan:
-    description: créer des fastpass facilement
+    description: créer des trashcan facilement
