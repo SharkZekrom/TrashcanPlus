@@ -38,12 +38,14 @@ public class Commands implements CommandExecutor , TabExecutor {
                     player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 8.0F);
 
                 }
+            } else {
+                player.sendMessage("§b[Trashcan+] " + Config.get().getString("NoPermission"));
             }
         }
 
         if (cmd.getName().equalsIgnoreCase("trashcan")) {
-            if (args.length > 0) {
-                if (sender instanceof ConsoleCommandSender) {
+            if (sender instanceof ConsoleCommandSender) {
+                if (args.length > 0) {
                     if (args.length == 2) {
                         if (args[0].equalsIgnoreCase("open")) {
 
@@ -65,7 +67,10 @@ public class Commands implements CommandExecutor , TabExecutor {
                         }
                     }
                 }
-                if (sender instanceof Player) {
+            }
+            if (sender instanceof Player) {
+                if (args.length > 0) {
+
                     Player player = (Player) sender;
 
                     if (args[0].equalsIgnoreCase("open")) {
@@ -82,21 +87,21 @@ public class Commands implements CommandExecutor , TabExecutor {
                                 player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 8.0F);
 
                             }
+                        } else {
+                            player.sendMessage("§b[Trashcan+] " + Config.get().getString("NoPermission"));
                         }
                     }
                     if (args[0].equalsIgnoreCase("help")) {
-                        if (sender.hasPermission("trashcan.admin")) {
 
-                            player.sendMessage(ChatColor.AQUA + "==========[Trashcan+]==========");
-                            player.sendMessage(ChatColor.AQUA + "");
-                            player.sendMessage(ChatColor.AQUA + "Commands:");
-                            player.sendMessage(ChatColor.AQUA + "");
-                            player.sendMessage(ChatColor.AQUA + "/trashcan help §8» §eSee all commands");
-                            player.sendMessage(ChatColor.AQUA + "/trashcan create <block/entity> §8» §eCreate a trashcan");
-                            player.sendMessage(ChatColor.AQUA + "/trashcan delete <block/entity> §8» §eDelete a trashcan");
-                            player.sendMessage(ChatColor.AQUA + "/trashcan open [player] §8» §eOpen a trashcan for you or for a player");
-                            player.sendMessage(ChatColor.AQUA + "/trashcan reload §8» §eReload the config");
-                        }
+                        player.sendMessage(ChatColor.AQUA + "==========[Trashcan+]==========");
+                        player.sendMessage(ChatColor.AQUA + "");
+                        player.sendMessage(ChatColor.AQUA + "Commands:");
+                        player.sendMessage(ChatColor.AQUA + "");
+                        player.sendMessage(ChatColor.AQUA + "/trashcan help §8» §eSee all commands");
+                        player.sendMessage(ChatColor.AQUA + "/trashcan create <block/entity> §8» §eCreate a trashcan");
+                        player.sendMessage(ChatColor.AQUA + "/trashcan delete <block/entity> §8» §eDelete a trashcan");
+                        player.sendMessage(ChatColor.AQUA + "/trashcan open [player] §8» §eOpen a trashcan for you or for a player");
+                        player.sendMessage(ChatColor.AQUA + "/trashcan reload §8» §eReload the config");
                     }
                     if (args[0].equalsIgnoreCase("create")) {
                         if (sender.hasPermission("trashcan.admin")) {
@@ -171,7 +176,10 @@ public class Commands implements CommandExecutor , TabExecutor {
                                 player.sendMessage(ChatColor.AQUA + "");
                                 player.sendMessage(ChatColor.AQUA + "/trashcan create <block/entity> §8» §eCreate a trashcan");
                             }
+                        } else {
+                            player.sendMessage("§b[Trashcan+] " + Config.get().getString("NoPermission"));
                         }
+
                     }
 
                     if (args[0].equalsIgnoreCase("delete")) {
@@ -243,6 +251,8 @@ public class Commands implements CommandExecutor , TabExecutor {
                                 player.sendMessage(ChatColor.AQUA + "");
                                 player.sendMessage(ChatColor.AQUA + "/trashcan delete <block/entity> §8» §eCreate a trashcan");
                             }
+                        } else {
+                            player.sendMessage("§b[Trashcan+] " + Config.get().getString("NoPermission"));
                         }
                     }
                     if (args[0].equalsIgnoreCase("open")) {
@@ -266,6 +276,8 @@ public class Commands implements CommandExecutor , TabExecutor {
                                     }
                                 }
                             }
+                        } else {
+                            player.sendMessage("§b[Trashcan+] " + Config.get().getString("NoPermission"));
                         }
                     }
                     if (args[0].equalsIgnoreCase("reload")) {
@@ -273,9 +285,22 @@ public class Commands implements CommandExecutor , TabExecutor {
 
                             Config.reload();
                             player.sendMessage(ChatColor.AQUA + "[Trashcan+]" + ChatColor.YELLOW + " Plugin reloaded.");
+                        } else {
+                            player.sendMessage("§b[Trashcan+] " + Config.get().getString("NoPermission"));
                         }
                     }
 
+                } else {
+                    Player player = (Player) sender;
+                    player.sendMessage(ChatColor.AQUA + "==========[Trashcan+]==========");
+                    player.sendMessage(ChatColor.AQUA + "");
+                    player.sendMessage(ChatColor.AQUA + "Commands:");
+                    player.sendMessage(ChatColor.AQUA + "");
+                    player.sendMessage(ChatColor.AQUA + "/trashcan help §8» §eSee all commands");
+                    player.sendMessage(ChatColor.AQUA + "/trashcan create <block/entity> §8» §eCreate a trashcan");
+                    player.sendMessage(ChatColor.AQUA + "/trashcan delete <block/entity> §8» §eDelete a trashcan");
+                    player.sendMessage(ChatColor.AQUA + "/trashcan open [player] §8» §eOpen a trashcan for you or for a player");
+                    player.sendMessage(ChatColor.AQUA + "/trashcan reload §8» §eReload the config");
                 }
             }
         }

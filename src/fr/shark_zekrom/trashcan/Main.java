@@ -36,7 +36,9 @@ public class Main extends JavaPlugin {
         Config.get().addDefault("GUISong", true);
         Config.get().addDefault("TrashInInventory", false);
         Config.get().addDefault("TrashInInventorySlot", 35);
-        Config.get().addDefault("TrashInInventoryName", "&8test");
+        Config.get().addDefault("TrashInInventoryName", "§8test");
+        Config.get().addDefault("NoPermission", "§cNo permissions to use this");
+
         Config.get().options().copyDefaults(true);
         Config.save();
 
