@@ -22,6 +22,8 @@ public class Main extends JavaPlugin {
         PluginManager pm = getServer().getPluginManager();
 
         this.getCommand("trashcan").setExecutor(new Commands());
+        this.getCommand("trash").setExecutor(new Commands());
+
         pm.registerEvents(new Event(), this);
 
         getConfig().options().copyDefaults();

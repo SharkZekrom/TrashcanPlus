@@ -22,6 +22,25 @@ public class Commands implements CommandExecutor , TabExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String string, String[] args) {
 
+        if (cmd.getName().equalsIgnoreCase("trash")) {
+            Player player = (Player) sender;
+
+            if (player.hasPermission("trashcan.open")) {
+                int size1 = Config.get().getInt("GUISize");
+                int size2 = size1 * 9;
+                String name1 = Config.get().getString("GUIName");
+                String name2 = name1.replaceAll("&", "§");
+                Boolean song = Config.get().getBoolean("GUISong");
+
+                Inventory inventory = Bukkit.createInventory(null, size2, name2);
+                player.openInventory(inventory);
+                if (song.equals(true)) {
+                    player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 8.0F);
+
+                }
+            }
+        }
+
         if (cmd.getName().equalsIgnoreCase("trashcan")) {
             if (args.length > 0) {
                 if (sender instanceof ConsoleCommandSender) {
@@ -48,8 +67,26 @@ public class Commands implements CommandExecutor , TabExecutor {
                 }
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
-                    if (sender.hasPermission("trashcan.admin")) {
-                        if (args[0].equalsIgnoreCase("help")) {
+
+                    if (args[0].equalsIgnoreCase("open")) {
+                        if (player.hasPermission("trashcan.open")) {
+                            int size1 = Config.get().getInt("GUISize");
+                            int size2 = size1 * 9;
+                            String name1 = Config.get().getString("GUIName");
+                            String name2 = name1.replaceAll("&", "§");
+                            Boolean song = Config.get().getBoolean("GUISong");
+
+                            Inventory inventory = Bukkit.createInventory(null, size2, name2);
+                            player.openInventory(inventory);
+                            if (song.equals(true)) {
+                                player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 8.0F);
+
+                            }
+                        }
+                    }
+                    if (args[0].equalsIgnoreCase("help")) {
+                        if (sender.hasPermission("trashcan.admin")) {
+
                             player.sendMessage(ChatColor.AQUA + "==========[Trashcan+]==========");
                             player.sendMessage(ChatColor.AQUA + "");
                             player.sendMessage(ChatColor.AQUA + "Commands:");
@@ -60,7 +97,10 @@ public class Commands implements CommandExecutor , TabExecutor {
                             player.sendMessage(ChatColor.AQUA + "/trashcan open [player] §8» §eOpen a trashcan for you or for a player");
                             player.sendMessage(ChatColor.AQUA + "/trashcan reload §8» §eReload the config");
                         }
-                        if (args[0].equalsIgnoreCase("create")) {
+                    }
+                    if (args[0].equalsIgnoreCase("create")) {
+                        if (sender.hasPermission("trashcan.admin")) {
+
                             if (args.length > 1) {
                                 if (args[1].equalsIgnoreCase("block")) {
                                     String key = ".";
@@ -132,8 +172,11 @@ public class Commands implements CommandExecutor , TabExecutor {
                                 player.sendMessage(ChatColor.AQUA + "/trashcan create <block/entity> §8» §eCreate a trashcan");
                             }
                         }
+                    }
 
-                        if (args[0].equalsIgnoreCase("delete")) {
+                    if (args[0].equalsIgnoreCase("delete")) {
+                        if (sender.hasPermission("trashcan.admin")) {
+
                             if (args.length > 1) {
                                 if (args[1].equalsIgnoreCase("block")) {
                                     String key = ".";
@@ -201,7 +244,10 @@ public class Commands implements CommandExecutor , TabExecutor {
                                 player.sendMessage(ChatColor.AQUA + "/trashcan delete <block/entity> §8» §eCreate a trashcan");
                             }
                         }
-                        if (args[0].equalsIgnoreCase("open")) {
+                    }
+                    if (args[0].equalsIgnoreCase("open")) {
+                        if (sender.hasPermission("trashcan.admin")) {
+
                             if (args.length == 2) {
                                 Player player1 = Bukkit.getPlayer(args[1]);
 
@@ -219,31 +265,17 @@ public class Commands implements CommandExecutor , TabExecutor {
                                         player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 8.0F);
                                     }
                                 }
-
-                            } else {
-                                int size1 = Config.get().getInt("GUISize");
-                                int size2 = size1 * 9;
-                                String name1 = Config.get().getString("GUIName");
-                                String name2 = name1.replaceAll("&", "§");
-                                Boolean song = Config.get().getBoolean("GUISong");
-
-                                Inventory inventory = Bukkit.createInventory(null, size2, name2);
-                                player.openInventory(inventory);
-                                if (song.equals(true)) {
-                                    player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 8.0F);
-                                }
                             }
                         }
-                        if (args[0].equalsIgnoreCase("reload")) {
+                    }
+                    if (args[0].equalsIgnoreCase("reload")) {
+                        if (sender.hasPermission("trashcan.admin")) {
+
                             Config.reload();
                             player.sendMessage(ChatColor.AQUA + "[Trashcan+]" + ChatColor.YELLOW + " Plugin reloaded.");
                         }
-                    } else {
-                        player.sendMessage(ChatColor.AQUA + "==========[Trashcan+]==========");
-                        player.sendMessage(ChatColor.AQUA + "");
-                        player.sendMessage(ChatColor.AQUA + "/trashcan help §8» §eSee all commands");
-
                     }
+
                 }
             }
         }
